@@ -9,6 +9,8 @@
 # - Links
 # - Images
 
+import re
+import sys
 from pyquery import PyQuery as pq
 from io import StringIO
 
@@ -117,10 +119,16 @@ def fix_paragraph_urls(p):
             e.remove()
     return p
 
-def main():
-    # Testing: Rip, convert and print tutorial 1
-    tutorial = get_tutorial(7) # Tutorial 1
+def perform(id):
+    tutorial = get_tutorial(id)
     print(get_markdown(tutorial))
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) >= 2:
+        try:
+            resource = int(sys.argv[1])
+            perform(resource)
+        except:
+            print('Invalid resource', file=sys.stderr)
+    else:
+        print('Url or id is required', file=sys.stderr)
