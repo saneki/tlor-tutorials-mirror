@@ -39,8 +39,10 @@ def get_tutorial(id):
         tag = e.tag
         e = pq(e)
         # Parse header
-        if tag == 'h2':
-            content.append({ 'type': 'header', 'text': e('span').text() })
+        if tag == 'h1':
+            content.append({ 'type': 'bigheader', 'text': e.text() })
+        elif tag == 'h2':
+            content.append({ 'type': 'header', 'text': e.text() })
         elif tag == 'h3':
             content.append({ 'type': 'subheader', 'text': e.text() })
         elif tag == 'ul':
@@ -74,12 +76,14 @@ def get_markdown(tutorial):
 
     # Write title/link
     title = tutorial['title']
-    str.write('{0}\n{1}\n'.format(title, '-' * len(title)))
+    str.write('{0}\n{1}\n'.format(title, '=' * len(title)))
     str.write('\nLink: {0}'.format(tutorial['url']))
 
     # Write content
     content = tutorial['content']
     for c in content:
+        if c['type'] == 'bigheader' and len(c['text']) > 0:
+            str.write('\n\n{0}\n{1}\n'.format(c['text'], '-' * len(c['text'])))
         if c['type'] == 'header' and len(c['text']) > 0:
             str.write('\n\n### {0}\n'.format(c['text']))
         if c['type'] == 'subheader' and len(c['text']) > 0:
