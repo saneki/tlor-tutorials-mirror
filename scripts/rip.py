@@ -62,7 +62,10 @@ def get_tutorial(id):
 
             content.append({ 'type': 'image', 'href': imgurl, 'src': imgsrc })
         elif tag == 'p':
-            e = fix_paragraph_special(fix_paragraph_urls(e))
+            imgs = fix_paragraph_inline_images(e)
+            for img in imgs: images.append(img)
+            fix_paragraph_special(e)
+            fix_paragraph_urls(e)
             content.append({ 'type': 'text', 'text': e.text() })
     tutorial['content'] = content
     tutorial['images'] = images
@@ -109,6 +112,17 @@ def transform_image_url(url, prefix='img/'):
     """ Get the filename from an original image url """
     return '{0}{1}'.format(prefix, url.split('/')[-1])
 
+def fix_paragraph_inline_images(p):
+    images = []
+    for element in p('img').items():
+        e = pq(element)
+        images.append(e.attr('src'))
+        src = transform_image_url(e.attr('src'))
+        alt = e.attr('alt') or transform_image_url(src, prefix='')
+        e.before('![{0}]({1})'.format(alt, src))
+        e.remove()
+    return images
+
 def fix_paragraph_special(p):
     for element in p('strong').items():
         e = pq(element)
@@ -118,7 +132,6 @@ def fix_paragraph_special(p):
         e = pq(element)
         e.before('*{0}*'.format(e.text()))
         e.remove()
-    return p
 
 def fix_paragraph_urls(p):
     spans = p('span')
@@ -129,7 +142,6 @@ def fix_paragraph_urls(p):
             text = e('a span').text().strip()
             e.before('[{0}]({1})'.format(text, href))
             e.remove()
-    return p
 
 def download_file(url, filepath, verbose=True):
     """ Download a single file """
