@@ -9,8 +9,10 @@
 # - Links
 # - Images
 
+import os
 import re
 import sys
+import requests
 from pyquery import PyQuery as pq
 from io import StringIO
 
@@ -62,6 +64,7 @@ def get_tutorial(id):
                 e = fix_paragraph_special(fix_paragraph_urls(e))
                 content.append({ 'type': 'text', 'text': e.text() })
     tutorial['content'] = content
+    tutorial['images'] = images
 
     return tutorial
 
@@ -93,6 +96,12 @@ def get_markdown(tutorial):
             str.write('\n![{0}]({1})\n'.format(imgfile, imgsrc))
     return str.getvalue()
 
+def get_directory_name(tutorial):
+    """ Get the default directory name to save a tutorial to """
+    title = re.sub('[#:]', '', tutorial['title'])
+    title = re.sub('\s+', '_', title)
+    return title.lower()
+
 def transform_image_url(url, prefix='img/'):
     """ Get the filename from an original image url """
     return '{0}{1}'.format(prefix, url.split('/')[-1])
@@ -119,16 +128,69 @@ def fix_paragraph_urls(p):
             e.remove()
     return p
 
+def download_file(url, filepath, verbose=True):
+    """ Download a single file """
+    if(verbose): print("Downloading {0} to {1}".format(url, filepath))
+    r = requests.get(url)
+    with open(filepath, 'wb') as file:
+        for chunk in r.iter_content(chunk_size=1024):
+            if chunk:
+                file.write(chunk)
+                file.flush()
+
+def download_images(tutorial):
+    """ Download all images collected from the tutorial """
+    images = tutorial['images']
+    dir = tutorial['directory']
+    for url in images:
+        filename = transform_image_url(url, prefix='')
+        filepath = os.path.join(dir, 'img', filename)
+        download_file(url, filepath)
+
+def write_markdown(tutorial):
+    markdown = get_markdown(tutorial)
+    filepath = os.path.join(tutorial['directory'], 'README.md')
+    with open(filepath, 'w') as file:
+        file.write(markdown)
+        file.flush()
+
+def prepare_directory(dir):
+    if os.path.exists(dir):
+        if os.path.isdir(dir):
+            print('Directory already exists at {0}'.format(dir))
+        else:
+            print('Non-directory file already exists at {0}'.format(dir))
+        return False
+    else:
+        os.mkdir(dir)
+        os.mkdir(os.path.join(dir, 'img'))
+        return True
+
 def perform(id):
+    print('Downloading tutorial...')
     tutorial = get_tutorial(id)
-    print(get_markdown(tutorial))
+
+    dirname = get_directory_name(tutorial)
+    if not prepare_directory(dirname):
+        return
+
+    tutorial['directory'] = dirname
+
+    print('Writing markdown file...')
+    write_markdown(tutorial)
+
+    print('Downloading {0} images...'.format(len(tutorial['images'])))
+    download_images(tutorial)
 
 if __name__ == '__main__':
     if len(sys.argv) >= 2:
+        resource = None
+
         try:
             resource = int(sys.argv[1])
-            perform(resource)
-        except:
+        except ValueError:
             print('Invalid resource', file=sys.stderr)
+
+        if resource is not None: perform(resource)
     else:
         print('Url or id is required', file=sys.stderr)
