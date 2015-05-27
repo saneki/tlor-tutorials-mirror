@@ -49,6 +49,9 @@ def get_tutorial(id):
             for item in e('li').items():
                 list.append(item.text())
             content.append({ 'type': 'list', 'items': list })
+        elif tag == 'pre':
+            code = e.text().replace('\r\n', '\n')
+            content.append({ 'type': 'code', 'text': code })
         elif (tag == 'p' and e('a > img')) or ((tag == 'div' or tag == 'a') and e('img')):
             # Add both images to list if they differ
             imgurl = e('a').attr('href')
@@ -96,6 +99,8 @@ def get_markdown(tutorial):
                 str.write('- {0}\n'.format(item))
         if c['type'] == 'text' and len(c['text']) > 0:
             str.write('\n{0}\n'.format(c['text']))
+        if c['type'] == 'code' and len(c['text']) > 0:
+            str.write('\n```\n{0}\n```\n'.format(c['text']))
         if c['type'] == 'image':
             imgfile = transform_image_url(c['src'], prefix='')
             imgsrc = transform_image_url(c['src'])
