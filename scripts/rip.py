@@ -49,21 +49,21 @@ def get_tutorial(id):
             for item in e('li').items():
                 list.append(item.text())
             content.append({ 'type': 'list', 'items': list })
-        # Parse paragraph
-        elif tag == 'p':
-            #print(len(e('a > img')))
-            if e('a > img'):
-                # Add both images to list if they differ
-                imgurl = e('a').attr('href')
-                imgsrc = e('a img').attr('src')
-                images.append(imgsrc)
-                if imgurl != imgsrc:
-                    images.append(imgurl)
+        elif (tag == 'p' and e('a > img')) or ((tag == 'div' or tag == 'a') and e('img')):
+            # Add both images to list if they differ
+            imgurl = e('a').attr('href')
+            imgsrc = e('img').attr('src')
+            images.append(imgsrc)
 
-                content.append({ 'type': 'image', 'href': imgurl, 'src': imgsrc })
-            else:
-                e = fix_paragraph_special(fix_paragraph_urls(e))
-                content.append({ 'type': 'text', 'text': e.text() })
+            if imgurl is None:
+                imgurl = imgsrc
+            elif imgurl != imgsrc:
+                images.append(imgurl)
+
+            content.append({ 'type': 'image', 'href': imgurl, 'src': imgsrc })
+        elif tag == 'p':
+            e = fix_paragraph_special(fix_paragraph_urls(e))
+            content.append({ 'type': 'text', 'text': e.text() })
     tutorial['content'] = content
     tutorial['images'] = images
 
@@ -101,7 +101,7 @@ def get_markdown(tutorial):
 
 def get_directory_name(tutorial):
     """ Get the default directory name to save a tutorial to """
-    title = re.sub('[#:]', '', tutorial['title'])
+    title = re.sub('[#:,()]', '', tutorial['title'])
     title = re.sub('\s+', '_', title)
     return title.lower()
 
