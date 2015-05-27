@@ -5,7 +5,7 @@ Link: http://thelegendofrandom.com/blog/archives/31
 
 ### What is Olly Debugger?
 
-From the author, Oleh Yuschuk, “OllyDbg is a 32-bit assembler level analysing debugger for Microsoft® Windows®. Emphasis on binary code analysis makes it particularly useful in cases where source is unavailable. ” Olly is also a “dynamic” debugger, meaning it allows the user to change quite a few things as the program is running. This is very important when experimenting with a binary, trying to figure out how it works. Olly has many, many great features, and that is why it is probably the number one debugger used for reverse engineering (at least in ring 3, but we’ll get to that later.)
+From the author, Oleh Yuschuk, “OllyDbg is a 32-bit assembler level analysing debugger for Microsoft® Windows®. Emphasis on binary code analysis makes it particularly useful in cases where source is unavailable.” Olly is also a “dynamic” debugger, meaning it allows the user to change quite a few things as the program is running. This is very important when experimenting with a binary, trying to figure out how it works. Olly has many, many great features, and that is why it is probably the number one debugger used for reverse engineering (at least in ring 3, but we’ll get to that later.)
 
 
 ### An Overview
@@ -73,7 +73,7 @@ Each of these icons opens a window, some of which you will use often, some rarel
 
 ![olly_memory.png](img/olly_memory.png)
 
-The memory window displays all of the memory blocks that the program has allocated. It includes the main sections of the running app (in this case, the “Showstr ” items in the Owner column. You can also see a lot of other sections down the list; these are DLL’s that the program has loaded into memory and plans on using. If you double-click on any of these lines, a window will open showing a disassembly (or hex dump) of that section. This window also shows the type of block, the access rights, the size and the memory address where the section is loaded.
+The memory window displays all of the memory blocks that the program has allocated. It includes the main sections of the running app (in this case, the “Showstr” items in the Owner column. You can also see a lot of other sections down the list; these are DLL’s that the program has loaded into memory and plans on using. If you double-click on any of these lines, a window will open showing a disassembly (or hex dump) of that section. This window also shows the type of block, the access rights, the size and the memory address where the section is loaded.
 
 ##### 2. (P)atches
 
