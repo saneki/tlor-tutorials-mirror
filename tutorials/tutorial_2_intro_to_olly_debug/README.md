@@ -12,6 +12,8 @@ From the author, Oleh Yuschuk, “OllyDbg is a 32-bit assembler level analysing 
 
 Here is a picture of Olly’s main display, along with some labels:
 
+![Olly1.png](img/Olly1.png)
+
 Olly opens with the default window, CPU, open. This is where most of the “big-picture” data is. If you ever close this window, just click the “C” icon in the toolbar. It is separated into 4 main fields; Disassembly, Registers, Stack, and Dump. Here is a description of each section.
 
 ##### 1. Disassembly
@@ -103,6 +105,8 @@ This window is different from the “Stack” see earlier. It shows a lot more i
 For the last item of this tutorial, I wanted to quickly introduce you to the right-click menu in Olly. It is where a lot of action happens, so you should at least be familiar with it. Right-clicking anywhere in the disassembly section brings it up:
 
 ![olly_menu.png](img/olly_menu.png)
+
+I will only go over the most popular items now. As you gain experience, you will end up using some of the less used options.
 
 “Binary” allows editing of the binary data on a byte-by-byte level. This is where you may change a “Unregistered” string buried in a binary to “Registered” . “Breakpoint” allows you to set a breakpoint. There are several types of breakpoints and we will be going over them in the next tutorial. “Search For” is a rather large sub-menu, and it’s where you search the binary for data such as strings, function calls etc. “Analysis” forces Olly to re-analyze the section of code you are currently viewing. Sometimes Olly gets confused as to whether you are viewing code or data (remember, they’re both just numbers) so this forces Olly to consider where you are in the code and attempt to guess what this section should look like.
 
