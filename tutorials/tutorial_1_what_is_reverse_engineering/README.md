@@ -5,7 +5,7 @@ Link: http://thelegendofrandom.com/blog/archives/7
 
 ### What is reverse engineering?
 
-Reverse engineering is the process of taking a compiled binary and attempting to recreate (or simply understand) the original way the program works. A programmer initially writes a program, usually in a high-level language such as C++ or Visual Basic (or God forbid, Delphi). Because the computer does not inherently speak these languages, the code that the programmer wrote is assembled into a more machine specific format, one to which a computer does speak. This code is called, originally enough, machine language. This code is not very human friendly,  and often times requires a great deal of brain power to figure out exactly what the programmer had in mind.
+Reverse engineering is the process of taking a compiled binary and attempting to recreate (or simply understand) the original way the program works. A programmer initially writes a program, usually in a high-level language such as C++ or Visual Basic (or God forbid, Delphi). Because the computer does not inherently speak these languages, the code that the programmer wrote is assembled into a more machine specific format, one to which a computer does speak. This code is called, originally enough, machine language. This code is not very human friendly, and often times requires a great deal of brain power to figure out exactly what the programmer had in mind.
 
 
 ### What is reverse engineering used for?
@@ -56,11 +56,11 @@ Every binary designed to run on a windows machine (and Linux for that matter) ha
 
 In the world of reverse engineering, this structure of bytes becomes very important, as it gives the reverser needed information about the binary. Eventually, you will want to (or need to) change this information, either to make the program do something different than what it was initially for, or to change the program BACK into something it originally was (like before a protector made the code really hard to understand). There are a plethora of PE viewers and editors out there. I use CFF Explorer (http://www.ntcore.com/exsuite.php) and LordPE (http://www.woodmann.com/collaborative/tools/index.php/LordPE), but you can feel free to use whichever you’re comfortable with.
 
-Most files also have resource sections. These include graphics, dialog items, menu items, icons and text strings. Sometimes you can have fun just by looking at (and altering ) the resource sections. I will show you an example at the end of this tutorial.
+Most files also have resource sections. These include graphics, dialog items, menu items, icons and text strings. Sometimes you can have fun just by looking at (and altering) the resource sections. I will show you an example at the end of this tutorial.
 
 ##### 5. System Monitoring tools
 
-When reversing programs, it is sometimes important (and when studying virii and malware, of the utmost importance) to see what changes an application makes to the system; are there registry keys created or queried? are there .ini files created? are separate processes created, perhaps to thwart reverse engineering of the application? Examples of system monitoring tools are [procmon](http://technet.microsoft.com/en-us/sysinternals/bb896645.aspx) ,[regshot](http://sourceforge.net/projects/regshot/) , and process hacker. We will discuss these later in the tutorial.
+When reversing programs, it is sometimes important (and when studying virii and malware, of the utmost importance) to see what changes an application makes to the system; are there registry keys created or queried? are there .ini files created? are separate processes created, perhaps to thwart reverse engineering of the application? Examples of system monitoring tools are [procmon](http://technet.microsoft.com/en-us/sysinternals/bb896645.aspx), [regshot](http://sourceforge.net/projects/regshot/), and process hacker. We will discuss these later in the tutorial.
 
 ##### 6. Miscellaneous tools and information
 
@@ -73,7 +73,7 @@ There are tools we will pick up along the way, such as scripts, unpackers, packe
 
 Even though we are starting with very little knowledge, I did want to give you at least a little taste of reversing in this first tutorial. I have included a resource viewer/edit in this tutorial (see the Files folder) called[XN Resource Editor](http://www.wilsonc.demon.co.uk/d10resourceeditor.htm) . It is freeware. Basically, this program allows you to see the resource section in an exe file, as well as modify these resources. I have found that you can have an awful lot of fun with these- they allow you to change the menus, icons, graphics, dialogs, you name it, in programs. Let’s try one ourselves…
 
-First, run XN. Click on the load icon on top, and click over to *Windows\System32\ and load calc.exe*  (you’re default windows location may vary.) You should see a bunch of folders available:
+First, run XN. Click on the load icon on top, and click over to *Windows\System32\ and load calc.exe* (you’re default windows location may vary.) You should see a bunch of folders available:
 
 ![XN1-229x300.png](img/XN1-229x300.png)
 
@@ -97,15 +97,15 @@ Till next time…
 
 -R4ndom
 
-ps. Thanks go out to Lena151, for showing me the way, A.S.L., snaker, Qwerton and Jibz for showing me the secrets, and Olly , Yoda-mmi, uCF and Colin Wilson for giving me the tools.
+ps. Thanks go out to Lena151, for showing me the way, A.S.L., snaker, Qwerton and Jibz for showing me the secrets, and Olly, Yoda-mmi, uCF and Colin Wilson for giving me the tools.
 
 
 ### Further Reading
 
-1. **Assembly Language.**  [Assembly Language For Intel Based Computers](http://www.amazon.com/Assembly-Language-x86-Processors-Edition/dp/013602212X/ref=sr_1_4?s=books&ie=UTF8&qid=1337355497&sr=1-4)  is the de-facto book on it . You can also check out some web sites that offer a tremendous amount of [downloads](http://homepage.mac.com/randyhyde/webster.cs.ucr.edu/index.html) , [instruction](http://assembly.co.nr/) , [sample code](http://www.codeproject.com/Articles/89460/Why-Learn-Assembly-Language)  , and [help](http://www.asmcommunity.net/board/) . Another good resource is *“The Art of Assembly”* . I will be including this in one of the next tutorials, but you can also download it [here](http://homepage.mac.com/randyhyde/webster.cs.ucr.edu/index.html)
+1. **Assembly Language.**  [Assembly Language For Intel Based Computers](http://www.amazon.com/Assembly-Language-x86-Processors-Edition/dp/013602212X/ref=sr_1_4?s=books&ie=UTF8&qid=1337355497&sr=1-4) is the de-facto book on it . You can also check out some web sites that offer a tremendous amount of [downloads](http://homepage.mac.com/randyhyde/webster.cs.ucr.edu/index.html), [instruction](http://assembly.co.nr/), [sample code](http://www.codeproject.com/Articles/89460/Why-Learn-Assembly-Language), and [help](http://www.asmcommunity.net/board/). Another good resource is *“The Art of Assembly”* . I will be including this in one of the next tutorials, but you can also download it [here](http://homepage.mac.com/randyhyde/webster.cs.ucr.edu/index.html)
 
 2. **The PE file structure.**  One of the best resources is from Microsoft themselves: “[An in-depth look into the Win32 Portable Executable File Format](http://msdn.microsoft.com/en-us/magazine/cc301805.aspx) “. Another good document (with lots of pretty pictures) is “[PE File Structure](http://www.curlybrace.com/archive/PE%20File%20Structure.pdf) “.   It is a downloadable PDF.
 
-3. **Windows Operating System Internals.**  The de-facto book is “[Microsoft Windows Internals](http://www.amazon.com/Windows-Internals-Book-Online-Cour/dp/1906795177/ref=sr_1_2?ie=UTF8&qid=1337355472&sr=8-2) ” by Mark Russinovich. It’s about as exciting as women’s baseball, but it is THE resource.
+3. **Windows Operating System Internals.**  The de-facto book is “[Microsoft Windows Internals](http://www.amazon.com/Windows-Internals-Book-Online-Cour/dp/1906795177/ref=sr_1_2?ie=UTF8&qid=1337355472&sr=8-2)” by Mark Russinovich. It’s about as exciting as women’s baseball, but it is THE resource.
 
 4. **Cracking tutorials.**  www.Tuts4You.com is the place to be.
