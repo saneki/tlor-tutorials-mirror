@@ -2,8 +2,7 @@
 # Python 3 script to rip tutorial pages from thelegendofrandom.com and
 # convert them to markdown.
 # Currently handles:
-# - Headers (h2)
-# - Subheaders (h3)
+# - Headers (h1/h2/h3)
 # - Lists (ul/li)
 # - Special text (bold/italics)
 # - Links
