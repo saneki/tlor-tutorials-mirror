@@ -16,7 +16,10 @@ from pyquery import PyQuery as pq
 from io import StringIO
 
 def get_tutorial_url(id):
-    return 'http://thelegendofrandom.com/blog/archives/{0}'.format(id)
+    if isinstance(id, int):
+        return 'http://thelegendofrandom.com/blog/archives/{0}'.format(id)
+    else:
+        return id
 
 def get_tutorial_document(id):
     return pq(url=get_tutorial_url(id))
@@ -158,6 +161,10 @@ def download_file(url, filepath, verbose=True):
                 file.write(chunk)
                 file.flush()
 
+def fix_image_url(url):
+    """ Fix image urls before downloading, specifically for web.archive.org """
+    return 'https://web.archive.org{0}'.format(url)
+
 def download_images(tutorial):
     """ Download all images collected from the tutorial """
     images = tutorial['images']
@@ -165,7 +172,7 @@ def download_images(tutorial):
     for url in images:
         filename = transform_image_url(url, prefix='')
         filepath = os.path.join(dir, 'img', filename)
-        download_file(url, filepath)
+        download_file(fix_image_url(url), filepath)
 
 def write_markdown(tutorial):
     markdown = get_markdown(tutorial)
@@ -204,13 +211,6 @@ def perform(id):
 
 if __name__ == '__main__':
     if len(sys.argv) >= 2:
-        resource = None
-
-        try:
-            resource = int(sys.argv[1])
-        except ValueError:
-            print('Invalid resource', file=sys.stderr)
-
-        if resource is not None: perform(resource)
+        perform(sys.argv[1])
     else:
         print('Url or id is required', file=sys.stderr)
