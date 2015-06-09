@@ -206,6 +206,7 @@ def perform(id):
     print('Writing markdown file...')
     write_markdown(tutorial)
 
+    tutorial['images'] = list(set(tutorial['images']))
     print('Downloading {0} images...'.format(len(tutorial['images'])))
     download_images(tutorial)
 
