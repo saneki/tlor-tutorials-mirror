@@ -211,11 +211,13 @@ When this program was first coded, all of these functions were called in various
 compiler did not know where these functions were going to be placed in memory when our program was
 run, so it would have created something that looked (though not exactly) like this:
 
-**40124C  JMP XXXXX** // gdi32.DeleteObject
-**401252  JMP XXXXX** // user32.CreateDialogParamA
-**401258  JMP XXXXX** // user32.DefWindowProcA
-**40125E  JMP XXXXX** // user32.DestroyWindow
-**…**
+```
+40124C  JMP XXXXX // gdi32.DeleteObject
+401252  JMP XXXXX // user32.CreateDialogParamA
+401258  JMP XXXXX // user32.DefWindowProcA
+40125E  JMP XXXXX // user32.DestroyWindow
+…
+```
 
 After the loader loaded our app and then loaded all the DLLs and found the address of these
 functions, it would have then gone through each one of these and replaced them with the actual
